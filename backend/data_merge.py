@@ -24,7 +24,7 @@ df_eis['Min'] = df_eis['Min'].apply(lambda x: pd.to_numeric(x, errors='coerce'))
 df_eis.set_index('MESS_DATUM', inplace=True)
 
 # Merge both data frames
-df = pd.merge(df_temp,df_eis, on='MESS_DATUM')
+df = pd.merge(df_temp, df_eis, on='MESS_DATUM')
 
 # Save merged data frame
 df.to_csv('./data/data_combined.csv')

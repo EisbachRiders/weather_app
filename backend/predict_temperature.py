@@ -1,4 +1,8 @@
 import numpy as np
+from crawler import CrawlWeather
+from datetime import datetime, timedelta
+import pandas as pd
+import numpy as np
 
 def predict_temperature(date, perception_level, sunshine, min_temp_outside, max_temp_outside, eisbach_temp):
     """
@@ -27,8 +31,50 @@ def predict_temperature(date, perception_level, sunshine, min_temp_outside, max_
 
     return (coeff_min.dot(input)+intercept_min, coeff_max.dot(input)+intercept_max)
 
-print(predict_temperature("20.04.2020", 0, 11.4, 7, 15.5, 12.9)) # taken data from meteomedia.de
+# Crawl weather data including Eisbach Temperature
+Data = CrawlWeather()
 
+# Extract minimum and maximum Eisbach temperature from today
+eisbach_temp_min_yest, eisbach_temp_max_yest = Data.eisbach_temperatures[0]
+eisbach_temp_min, eisbach_temp_max = Data.eisbach_temperatures[1]
+eisbach_temp = eisbach_temp_max_yest
+# Get forecast
+df = pd.read_csv('forecast.csv', index_col='Date', sep=";")
+
+for i in range(0, len(Data.weather_forecast)):
+    perception_level, sunshine, min_temp_outside, max_temp_outside = Data.weather_forecast[i]
+    date = datetime.now() + timedelta(days=i)
+    pred_min, pred_max = predict_temperature(date.strftime("%d.%m.%Y"), perception_level, sunshine, min_temp_outside, max_temp_outside,
+                        eisbach_temp)
+
+    if (i==0):
+        pred_min = min(pred_min, eisbach_temp_min) # if current Eisbach_temperature is already lower than the prediction
+        pred_max = max(pred_max, eisbach_temp_max)  # if current Eisbach_temperature is already higher than the prediction
+
+        # Update data frame with real temperatures from yesterday
+        if (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y") in df.index:
+            df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), df.columns == 'Eisbach_Temp_min'] = eisbach_temp_min_yest
+            df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), df.columns == 'Eisbach_Temp_max'] = eisbach_temp_max_yest
+
+    data = pd.DataFrame({'perception_level': float(perception_level),
+                         'Sunshine': float(sunshine),
+                         'Outside_Temp_min': float(min_temp_outside),
+                         'Outside_Temp_max': float(max_temp_outside),
+                         'Eisbach_Temp_Yest': float(eisbach_temp),
+                         'Eisbach_Temp_min': float(round(pred_min, 1)),
+                         'Eisbach_Temp_max': float(round(pred_max, 1))},
+                         index = [date.strftime("%d.%m.%Y")])
+
+
+    if date.strftime("%d.%m.%Y") in df.index:
+        df.update(data)
+    else:
+        df = pd.concat([df, data], sort=False)
+
+    eisbach_temp = round(pred_max, 1)
+    #print(date.strftime("%d.%m.%Y") + ": " + str(round(pred_min, 1)) + "°/" + str(round(pred_max, 1)) + "°") # taken data from meteomedia.de
+
+df.to_csv('forecast.csv', index_label='Date', sep=";")
 # Models old
 # Forecast model without the Eisbach temperature day before
     # coeff = np.array([0.06144129, 0.20976543, 0.02161775, 0.11419631, 0.33478473, 0.2672007]) # determined in create_model.py
