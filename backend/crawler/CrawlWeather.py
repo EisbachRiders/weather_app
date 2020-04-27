@@ -58,12 +58,14 @@ class CrawlWeather:
         param_sun =[]
         liste_son = doc.select(".spaces-weather-grid .swg-row-info")
         for element in liste_son:
-            if "Sonnenstunden" in element.text:
+            if "Sonne" in element.text:
                 # Check which phrase is forecasting the sun hours and change to right number format
-                if ("Heute gibt es bis zu" in element.text.split("Sonnenstunden")[0]):
-                    param_sun.append(float(element.text.split("Sonnenstunden")[0].split("Heute gibt es bis zu")[1].replace(',','.')))
+                if ("Heute gibt es bis zu" in element.text.split("Sonne")[0]):
+                    param_sun.append(float(element.text.split("Sonne")[0].split("Heute gibt es bis zu")[1].replace(',', '.')))
+                elif ("zeigt sich nur etwa" in element.text.split("Sonne")[1]):
+                    param_sun.append(float(element.text.split("Sonne")[1].split("zeigt sich nur etwa ")[1].split(" Stunde")[0].replace(',', '.')))
                 else:
-                    param_sun.append(float(element.text.split("Sonnenstunden")[0].split("Freuen Sie sich auf bis zu")[1].replace(',', '.')))
+                    param_sun.append(float(element.text.split("Sonne")[0].split("Freuen Sie sich auf bis zu")[1].replace(',', '.')))
 
         forecast_data = []
 
