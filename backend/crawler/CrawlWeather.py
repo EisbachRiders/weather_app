@@ -64,6 +64,8 @@ class CrawlWeather:
                     param_sun.append(float(element.text.split("Sonne")[0].split("Heute gibt es bis zu")[1].replace(',', '.')))
                 elif ("zeigt sich nur etwa" in element.text.split("Sonne")[1]):
                     param_sun.append(float(element.text.split("Sonne")[1].split("zeigt sich nur etwa ")[1].split(" Stunde")[0].replace(',', '.')))
+                elif ("ist heute fast nicht zu sehen" in element.text.split("Sonne")[1]):
+                    param_sun.append(float(0.0))
                 else:
                     param_sun.append(float(element.text.split("Sonne")[0].split("Freuen Sie sich auf bis zu")[1].replace(',', '.')))
 
