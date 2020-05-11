@@ -1,4 +1,3 @@
-import numpy as np
 from crawler import CrawlWeather
 from datetime import datetime, timedelta
 import pandas as pd
@@ -22,6 +21,7 @@ def predict_temperature(date, perception_level, sunshine, min_temp_outside, max_
     month = int(date.split('.')[1])
     input = np.array([year, month, perception_level, sunshine, min_temp_outside, max_temp_outside, eisbach_temp])
 
+    # Model based on absolute values
     coeff_min = np.array([0.00671369,  0.05433055, -0.01699897, -0.0091107,   0.04654794,  0.04494732,
                           0.80392883])  # determined in create_model.py
     intercept_min = -13.801013453736768  # determined in create_model.py
@@ -29,17 +29,60 @@ def predict_temperature(date, perception_level, sunshine, min_temp_outside, max_
     coeff_max = np.array([0.0037455,  0.02092407, -0.00372701, 0.04690195, 0.06081745, 0.03382019, 0.84128262]) # determined in create_model.py
     intercept_max = -7.175286431561844 # determined in create_model.py
 
-    return (coeff_min.dot(input)+intercept_min, coeff_max.dot(input)+intercept_max)
+    pred_min= (coeff_min.dot(input)+intercept_min)
+    pred_max = (coeff_max.dot(input)+intercept_max)
+
+    # Model based on absolute values reduced without month and year impact
+    coeff_min = np.array([0.01472884, -0.07693521, -0.01854033,  0.03439843,  0.94663809])  # determined in create_model.py
+    intercept_min = -0.21604758181539374  # determined in create_model.py
+
+    coeff_max = np.array([0.03120086, -0.01669777, -0.00640453,  0.02463498,  0.97910236]) # determined in create_model.py
+    intercept_max = 0.256595732133281 # determined in create_model.py
+
+    #pred_min= (coeff_min.dot(input[2:])+intercept_min)
+    #pred_max = (coeff_max.dot(input[2:])+intercept_max)
+
+    #return (coeff_min.dot(input)+intercept_min, coeff_max.dot(input)+intercept_max)
+
+    # Model based on relative values and current temperature
+    coeff_min = np.array([-0.00156414, 0.00934064, 0.0009266,  -0.00420075,  0.00014419,  0.00738503,
+                          -0.00282276])  # determined in create_model.py
+    intercept_min = 2.9807046899104903  # determined in create_model.py
+
+    coeff_max = np.array([5.13029312e-05,  2.56985254e-03, 2.51015435e-03, 9.85807662e-04, -1.44815570e-03, 3.07148536e-03, -3.60185565e-03]) # determined in create_model.py
+    intercept_max = -0.07738353005475171 # determined in create_model.py
+
+    # Model based on relative values
+    #input = np.array([year, month, perception_level, sunshine, min_temp_outside, max_temp_outside])
+    #coeff_min = np.array([-0.00173306,  0.00878944,  0.00095759, -0.00457154, -0.00064343,  0.0064828
+    #                      ])  # determined in create_model.py
+    #intercept_min = 3.310302355133679 # determined in create_model.py
+
+    #coeff_max = np.array([-0.00016424,  0.00186651,  0.0025497,   0.00051268, -0.00245315,  0.00192023 ]) # determined in create_model.py
+    #intercept_max = 0.3431845685560249 # determined in create_model.py
+
+    #pred_min= (1+coeff_min.dot(input)+intercept_min)*eisbach_temp
+    #pred_max = (1+coeff_max.dot(input)+intercept_max)*eisbach_temp
+
+    return (pred_min, pred_max)
 
 # Crawl weather data including Eisbach Temperature
 Data = CrawlWeather()
+
+# Comparison with Meteomedia
+# Data.eisbach_temperatures = [(11.2, 15.6), (300, -100)]
+# Data.weather_forecast = [(2.1, 4.0, 13, 22)]
+
+# Get previous forecasts
+df = pd.read_csv('forecast.csv', index_col='Date', sep=";")
 
 # Extract minimum and maximum Eisbach temperature from today
 eisbach_temp_min_yest, eisbach_temp_max_yest = Data.eisbach_temperatures[0]
 eisbach_temp_min, eisbach_temp_max = Data.eisbach_temperatures[1]
 eisbach_temp = eisbach_temp_max_yest
-# Get forecast
-df = pd.read_csv('forecast.csv', index_col='Date', sep=";")
+
+if eisbach_temp == None:
+    eisbach_temp = df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), 'Eisbach_Temp_max'].astype('float64')[0]
 
 for i in range(0, len(Data.weather_forecast)):
     perception_level, sunshine, min_temp_outside, max_temp_outside = Data.weather_forecast[i]
@@ -53,8 +96,11 @@ for i in range(0, len(Data.weather_forecast)):
 
         # Update data frame with real temperatures from yesterday
         if (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y") in df.index:
-            df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), df.columns == 'Eisbach_Temp_min'] = eisbach_temp_min_yest
-            df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), df.columns == 'Eisbach_Temp_max'] = eisbach_temp_max_yest
+            # only update real temperatures if they are available
+            if not eisbach_temp_min_yest == None:
+                df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), df.columns == 'Eisbach_Temp_min'] = eisbach_temp_min_yest
+            if not eisbach_temp_max_yest == None:
+                df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), df.columns == 'Eisbach_Temp_max'] = eisbach_temp_max_yest
 
     data = pd.DataFrame({'perception_level': float(perception_level),
                          'Sunshine': float(sunshine),
@@ -72,7 +118,7 @@ for i in range(0, len(Data.weather_forecast)):
         df = pd.concat([df, data], sort=False)
 
     eisbach_temp = round(pred_max, 1)
-    #print(date.strftime("%d.%m.%Y") + ": " + str(round(pred_min, 1)) + "°/" + str(round(pred_max, 1)) + "°") # taken data from meteomedia.de
+    print(date.strftime("%d.%m.%Y") + ": " + str(round(pred_min, 1)) + "°/" + str(round(pred_max, 1)) + "°") # taken data from meteomedia.de
 
 df.to_csv('forecast.csv', index_label='Date', sep=";")
 # Models old

@@ -18,13 +18,19 @@ class CrawlWeather:
 
         data = doc.select(".row2 .center")
 
-        min_Temp = 100
-        max_Temp = -300
+        min_Temp = None
+        max_Temp = None
 
         for element in data:
             if not element.text =="--":
-                min_Temp = min(min_Temp, float(element.text.replace(',', '.')))
-                max_Temp = max(max_Temp, float(element.text.replace(',', '.')))
+                if min_Temp == None:
+                    min_Temp = float(element.text.replace(',', '.'))
+                else:
+                    min_Temp = min(min_Temp, float(element.text.replace(',', '.')))
+                if max_Temp == None:
+                    max_Temp =float(element.text.replace(',', '.'))
+                else:
+                    max_Temp = max(max_Temp, float(element.text.replace(',', '.')))
 
         return (min_Temp,  max_Temp)
 
