@@ -1,12 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+import numpy as np
 
 class CrawlWeather:
-    def __init__(self, update=True):
+    def __init__(self, update=True, days_forecast=3):
         self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/73.1'}
         self.eisbach_temperatures = []
         self.weather_forecast = []
+        self.days_forecast = days_forecast
 
         if update:
             self.getData()
@@ -37,7 +39,8 @@ class CrawlWeather:
     def getWeather(self):
 
         #url = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/deutschland/flughafen-muenchen-franz-josef-strauss-muc/DE0003033027.html'
-        url  = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/deutschland/muenchen/DE0006515.html'
+        #url  = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/deutschland/muenchen/DE0006515.html'
+        url = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/' + str(self.days_forecast)  + '_tagesvorhersage/deutschland/muenchen/DE0006515.html'
         r = requests.get(url)
 
         doc = BeautifulSoup(r.text, "html.parser")
@@ -47,9 +50,11 @@ class CrawlWeather:
         param_rain = []
         count= 0
 
+        crawl_ids = np.arange(0, self.days_forecast*5, 5)
+
         # Get temperatures and rain
         for element in data:
-            if count==0 or count==5 or count==10:
+            if count in crawl_ids:
                 data_max = element.select(".swg-col-temperature .swg-text-large")
                 data_min = element.select(".swg-col-temperature .swg-text-small")
                 data_rain= element.select(".swg-col-wv2")

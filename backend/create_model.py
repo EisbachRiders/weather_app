@@ -25,6 +25,7 @@ df = pd.read_csv('./data/data_combined.csv')
 # (Min) = Minimale Temperatur Eisbach / Minimum Temperature Eisbacht [°C]
 
 # create data frame with temperature of eisbach the day before
+df['MeanTemp'] = df['MeanTemp'].apply(lambda x: float(x) if not x =='--' else float('nan'))
 df_temp_yest = df[['MESS_DATUM', 'Max']]
 df_temp_yest.rename(columns={'Max': 'Temp_yest'}, inplace=True)
 df_temp_yest['MESS_DATUM'] = df_temp_yest['MESS_DATUM'].apply(lambda x: x + 1)
@@ -63,3 +64,4 @@ print(model_max.intercept_) # -119.94585765676487
 print('\nCoefficients Minimum Temperatures:')
 print(model_min.coef_)
 print(model_min.intercept_)
+
