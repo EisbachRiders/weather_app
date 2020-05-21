@@ -1,7 +1,8 @@
 from crawler import CrawlWeather
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import pandas as pd
 import numpy as np
+import math
 
 def predict_temperature(date, perception_level, sunshine, min_temp_outside, max_temp_outside, eisbach_temp):
     """
@@ -89,6 +90,7 @@ def predict_temperature(date, perception_level, sunshine, min_temp_outside, max_
 
 # Crawl weather data including Eisbach Temperature
 Data = CrawlWeather(days_forecast=3) # 3 and 7 days forecast available
+Data.eisbach_data.dropna(inplace=True, axis=0)
 
 # Comparison with Meteomedia
 # Data.eisbach_temperatures = [(11.2, 15.6), (300, -100)]
@@ -98,15 +100,18 @@ Data = CrawlWeather(days_forecast=3) # 3 and 7 days forecast available
 df = pd.read_csv('forecast.csv', index_col='Date', sep=";")
 
 # Extract minimum and maximum Eisbach temperature from today
-eisbach_temp_min_yest, eisbach_temp_max_yest = Data.eisbach_temperatures[0]
-eisbach_temp_min, eisbach_temp_max = Data.eisbach_temperatures[1]
+eisbach_temp_min_yest, eisbach_temp_max_yest = Data.eisbach_data[Data.eisbach_data.index < pd.to_datetime(date.today())]['water_temperature'].min(), \
+                                               Data.eisbach_data[Data.eisbach_data.index < pd.to_datetime(date.today())]['water_temperature'].max()
+eisbach_temp_min, eisbach_temp_max = Data.eisbach_data[Data.eisbach_data.index >= pd.to_datetime(date.today())]['water_temperature'].min(),\
+                                     Data.eisbach_data[Data.eisbach_data.index >= pd.to_datetime(date.today())]['water_temperature'].max()
 eisbach_temp = eisbach_temp_max_yest
 #eisbach_temp = (eisbach_temp_max_yest + eisbach_temp_min_yest) * 0.5
 
-if eisbach_temp == None:
+if eisbach_temp == None or math.isnan(eisbach_temp):
     eisbach_temp_min_yest = df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), 'Eisbach_Temp_max'].astype('float64')[0]
     eisbach_temp_max_yest = df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), 'Eisbach_Temp_min'].astype('float64')[0]
     eisbach_temp = eisbach_temp_max_yest
+
 
 for i in range(0, len(Data.weather_forecast)):
     perception_level, sunshine, min_temp_outside, max_temp_outside = Data.weather_forecast[i]
@@ -147,7 +152,10 @@ for i in range(0, len(Data.weather_forecast)):
     eisbach_temp = pred_max
     print(date.strftime("%d.%m.%Y") + ": " + str(round(pred_min, 1)) + "°/" + str(round(pred_max, 1)) + "°") # taken data from meteomedia.de
 
+# save data to json
+Data.eisbach_data[-48:].to_json('./data/current_eisbach_data.json', orient='index')  # last 24h, 2 entries per hour
 df.to_csv('forecast.csv', index_label='Date', sep=";")
+df[-Data.days_forecast:][['Eisbach_Temp_min', 'Eisbach_Temp_max']].to_json('./data/forecast.json', orient='index')
 # Models old
 # Forecast model without the Eisbach temperature day before
     # coeff = np.array([0.06144129, 0.20976543, 0.02161775, 0.11419631, 0.33478473, 0.2672007]) # determined in create_model.py

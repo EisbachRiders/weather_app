@@ -2,42 +2,69 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import numpy as np
+import pandas as pd
 
 class CrawlWeather:
     def __init__(self, update=True, days_forecast=3):
         self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/73.1'}
-        self.eisbach_temperatures = []
+        # self.eisbach_data = [] # data_frame,
         self.weather_forecast = []
         self.days_forecast = days_forecast
 
         if update:
             self.getData()
 
-    def getTemperature(self, date_start, date_end):
-        url = "https://www.gkd.bayern.de/de/fluesse/wassertemperatur/isar/muenchen-himmelreichbruecke-16515005/monatswerte/tabelle?beginn=" + date_start.strftime("%d.%m.%Y") + "&ende=" + date_end.strftime("%d.%m.%Y")
-        r = requests.get(url)
-        doc = BeautifulSoup(r.text, "html.parser")
+    def getCreekData(self, date_start, date_end):
+        categories = ['wassertemperatur', 'abfluss', 'wasserstand']
+        labels = {'wassertemperatur': 'water_temperature', 'abfluss': 'runoff', 'wasserstand': 'water_level'}
 
-        data = doc.select(".row2 .center")
+        for category in categories:
+            url = "https://www.gkd.bayern.de/de/fluesse/" + category + "/isar/muenchen-himmelreichbruecke-16515005/monatswerte/tabelle?beginn=" + date_start.strftime(
+                "%d.%m.%Y") + "&ende=" + date_end.strftime("%d.%m.%Y")
+            r = requests.get(url)
 
-        min_Temp = None
-        max_Temp = None
+            doc = BeautifulSoup(r.text, "html.parser")
+            data = doc.select(".row2")
 
-        for element in data:
-            if not element.text =="--":
-                if min_Temp == None:
-                    min_Temp = float(element.text.replace(',', '.'))
+            i = 0
+            for element in data:
+                date_val = element.text.split(' ')[0]
+                time_val = element.text.split(' ')[1][0:5]
+                cat_val = element.text.split(' ')[1][5:]
+
+                if not cat_val == "--":
+                    cat_val = float(cat_val.replace(',', '.'))
                 else:
-                    min_Temp = min(min_Temp, float(element.text.replace(',', '.')))
-                if max_Temp == None:
-                    max_Temp =float(element.text.replace(',', '.'))
-                else:
-                    max_Temp = max(max_Temp, float(element.text.replace(',', '.')))
+                    cat_val = float('NaN')
 
-        return (min_Temp,  max_Temp)
+                if i == 0:
+                    value_list = np.array([[datetime(int(date_val.split('.')[2]), int(date_val.split('.')[1]), int(date_val.split('.')[0]),
+                                                     int(time_val.split(':')[0]), int(time_val.split(':')[1]), 0), cat_val]])
+                    i = 1
+                else:
+                    value_list = np.append(value_list, [[datetime(int(date_val.split('.')[2]), int(date_val.split('.')[1]), int(date_val.split('.')[0]),
+                                                     int(time_val.split(':')[0]), int(time_val.split(':')[1]), 0), cat_val]], axis=0)
+
+            if category == 'wassertemperatur':
+                creek_data = pd.DataFrame({labels[category]: value_list[:, 1]}, index=value_list[:, 0])
+            else:
+                creek_data = pd.concat(
+                    [creek_data, pd.DataFrame({labels[category]: value_list[:, 1]}, index=value_list[:, 0])], axis=1)
+
+                # old code, only determine min, max temperature
+                #if not element.text =="--":
+                    #if min_Temp == None:
+                    #    min_Temp = float(element.text.replace(',', '.'))
+                    #else:
+                    #    min_Temp = min(min_Temp, float(element.text.replace(',', '.')))
+                    #if max_Temp == None:
+                    #    max_Temp =float(element.text.replace(',', '.'))
+                    #else:
+                    #    max_Temp = max(max_Temp, float(element.text.replace(',', '.')))
+
+        return creek_data
 
     def getWeather(self):
-
         #url = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/deutschland/flughafen-muenchen-franz-josef-strauss-muc/DE0003033027.html'
         #url  = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/deutschland/muenchen/DE0006515.html'
         url = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/' + str(self.days_forecast)  + '_tagesvorhersage/deutschland/muenchen/DE0006515.html'
@@ -48,7 +75,7 @@ class CrawlWeather:
         param_min = []
         param_max = []
         param_rain = []
-        count= 0
+        count = 0
 
         crawl_ids = np.arange(0, self.days_forecast*5, 5)
 
@@ -89,8 +116,7 @@ class CrawlWeather:
 
     def getData(self):
         self.weather_forecast = self.getWeather()
-        # Get Temperatures from yesterday
-        self.eisbach_temperatures = [self.getTemperature(datetime.now() - timedelta(days=1), datetime.now()- timedelta(days=1))]#Get temperatures from yesterday
-        # Get Current Eisbach Temperatures
-        self.eisbach_temperatures.append(self.getTemperature(datetime.now(), datetime.now())) # Get temperatures from yesterday
+        # Get Eisbach Data
+        self.eisbach_data = self.getCreekData(datetime.now() - timedelta(days=1), datetime.now())#Get temperatures from yesterday
+
 
