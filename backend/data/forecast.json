@@ -1,1 +1,26 @@
-{"21.05.2020":{"Eisbach_Temp_min":13.0,"Eisbach_Temp_max":15.0},"22.05.2020":{"Eisbach_Temp_min":13.5,"Eisbach_Temp_max":15.0},"23.05.2020":{"Eisbach_Temp_min":13.0,"Eisbach_Temp_max":14.5}}
+{
+  "today": {
+    "date": "21.05.2020",
+    "minWaterTemp": 13.0,
+    "maxWaterTemp": 15.0,
+    "maxTemp": 78
+  },
+  "tomorrow": {
+    "date": "22.05.2020",
+    "minWaterTemp": 13.5,
+    "maxWaterTemp": 15.0,
+    "maxTemp": 73
+  },
+  "next": {
+    "date": "23.05.2020",
+    "minWaterTemp": 13.0,
+    "maxWaterTemp": 14.5,
+    "maxTemp": 65
+  },
+  "current": {
+    "temp": [58, 60, 69, 74, 77, 68, 65, 64, 65],
+    "waterTemp": [15.8, 15.7, 15.4, 15.1, 15.2, 14.9, 14.8, 14.7, 14.7],
+    "waterLevel": 146,
+    "runoff": 24.7
+  }
+}
