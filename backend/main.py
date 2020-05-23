@@ -96,7 +96,8 @@ def main(show_forecast=False):
     df.to_csv('./data/forecast.csv', index_label='Date', sep=";")
     Data.eisbach_data.to_csv('./data/eisbach_data.csv', index_label='Date', sep=";")
     #df[-Data.days_forecast:][['eisbachTempMin', 'eisbachTempMax']].to_json('./data/forecast_only.json', orient='index')
-    return {'forecast': df[['eisbachTempMin', 'eisbachTempMax']][-3:].to_dict('index'), 'hourly': Data.eisbach_data[-33::4].to_dict('index')}
+    data_returned = Data.eisbach_data.reset_index()
+    return {'forecast': df[['eisbachTempMin', 'eisbachTempMax']][-3:].to_dict('index'), 'hourly': data_returned.loc[-33::4, ['waterTemperature', 'runoff', 'waterLevel']].to_dict('index')}
 
     # Combine json files
     #with open('./data/forecast.json', 'w') as file:
