@@ -34,6 +34,8 @@ class CrawlWeather:
 
                 if not cat_val == "--":
                     cat_val = float(cat_val.replace(',', '.'))
+                    if category == 'abfluss' or category == 'wasserstand':
+                        break
                 else:
                     cat_val = float('NaN')
 
@@ -47,9 +49,12 @@ class CrawlWeather:
 
             if category == 'wassertemperatur':
                 creek_data = pd.DataFrame({labels[category]: value_list[:, 1]}, index=value_list[:, 0])
+            elif category == 'abfluss':
+                self.eisbach_runoff = cat_val
             else:
-                creek_data = pd.concat(
-                    [creek_data, pd.DataFrame({labels[category]: value_list[:, 1]}, index=value_list[:, 0])], axis=1)
+                self.eisbach_waterlevel = cat_val
+                #creek_data = pd.concat(
+                #    [creek_data, pd.DataFrame({labels[category]: value_list[:, 1]}, index=value_list[:, 0])], axis=1)
 
         # if crawling data delivers not the right hour format (not full and half hours), shifting data by 15min
         creek_data.index = creek_data.index.map(lambda x: x+timedelta(minutes=15.0) if (x.minute == 15) or (x.minute == 45) else x)
@@ -65,7 +70,7 @@ class CrawlWeather:
             # add new values
             creek_data_stored = pd.concat([creek_data_stored, creek_data[~creek_data.index.isin(creek_data_stored.index)]])
             # update values with current eisbach data
-            creek_data_stored.update(creek_data[['waterTemperature', 'runoff', 'waterLevel']])
+            creek_data_stored.update(creek_data['waterTemperature'])
 
             creek_data = creek_data_stored
         else:

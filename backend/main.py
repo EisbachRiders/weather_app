@@ -4,6 +4,7 @@ import pandas as pd
 import math
 from predict_temperature import predict_temperature
 import os.path
+import json
 
 def main(show_forecast=False):
     # Crawl weather data including Eisbach Temperature
@@ -36,10 +37,10 @@ def main(show_forecast=False):
     if eisbach_temp == None or math.isnan(eisbach_temp):
         if forecast_exist:
             eisbach_temp_min_yest = \
-            df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), 'eisbachTempMax'].astype(
+            df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), 'maxWaterTemp'].astype(
                 'float64')[0]
             eisbach_temp_max_yest = \
-            df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), 'eisbachTempMin'].astype(
+            df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime("%d.%m.%Y"), 'minWaterTemp'].astype(
                 'float64')[0]
             eisbach_temp = eisbach_temp_max_yest
         else:
@@ -63,18 +64,18 @@ def main(show_forecast=False):
                 # only update real temperatures if they are available
                 if not eisbach_temp_min_yest == None:
                     df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime(
-                        "%d.%m.%Y"), df.columns == 'eisbachTempMin'] = eisbach_temp_min_yest
+                        "%d.%m.%Y"), df.columns == 'minWaterTemp'] = eisbach_temp_min_yest
                 if not eisbach_temp_max_yest == None:
                     df.loc[df.index == (datetime.now() - timedelta(days=1)).strftime(
-                        "%d.%m.%Y"), df.columns == 'eisbachTempMax'] = eisbach_temp_max_yest
+                        "%d.%m.%Y"), df.columns == 'maxWaterTemp'] = eisbach_temp_max_yest
         # store data
         data = pd.DataFrame({'perceptionLevel': float(perception_level),
                              'sunshine': float(sunshine),
-                             'outsideTempMin': float(min_temp_outside),
-                             'outsideTempMax': float(max_temp_outside),
+                             'minTemp': float(min_temp_outside),
+                             'maxTemp': float(max_temp_outside),
                              'eisbachTempYest': float(eisbach_temp),
-                             'eisbachTempMin': float(round(pred_min, 1)),
-                             'eisbachTempMax': float(round(pred_max, 1))},
+                             'minWaterTemp': float(round(pred_min, 1)),
+                             'maxWaterTemp': float(round(pred_max, 1))},
                             index=[forecast_date.strftime("%d.%m.%Y")])
 
         # check if forecast.csv file exists, if True update forecast data
@@ -91,15 +92,31 @@ def main(show_forecast=False):
         if show_forecast:
             print(forecast_date.strftime("%d.%m.%Y") + ": " + str(round(pred_min, 1)) + "°/" + str(round(pred_max, 1)) + "°")
 
-    # save data to json and csv file
+    # save data to csv file
     # red = Data.eisbach_data[-36:-1:4][['waterTemperature', 'runoff', 'waterLevel']].sort_index(ascending=True)
     df.to_csv('./data/forecast.csv', index_label='Date', sep=";")
     Data.eisbach_data.to_csv('./data/eisbach_data.csv', index_label='Date', sep=";")
-    #df[-Data.days_forecast:][['eisbachTempMin', 'eisbachTempMax']].to_json('./data/forecast_only.json', orient='index')
-    data_returned = Data.eisbach_data.reset_index()
-    return {'forecast': df[['eisbachTempMin', 'eisbachTempMax']][-3:].to_dict('index'), 'hourly': data_returned.loc[-33::4, ['waterTemperature', 'runoff', 'waterLevel']].to_dict('index')}
 
-    # Combine json files
+    # Prepare data for output
+    forecast_return = df[['minWaterTemp', 'maxWaterTemp', 'maxTemp']][-3:]
+    forecast_return.index.name = 'Date'
+    forecast_return.reset_index(inplace=True)
+    forecast_return['index'] = ['today', 'tomorrow', 'next']
+    forecast_return.set_index('index', inplace=True)
+
+    data_returned = Data.eisbach_data.reset_index()
+
+    data_dict = forecast_return[['Date', 'minWaterTemp', 'maxWaterTemp', 'maxTemp']].to_dict('index')
+    data_dict['current'] = {'temp': list(data_returned['airTemperature'].iloc[-9:].to_numpy()),
+                            'waterTemp': list(data_returned['waterTemperature'].iloc[-9:].to_numpy()),
+                            'waterLevel': Data.eisbach_waterlevel,
+                            'runoff': Data.eisbach_runoff }
+
+
+    # Write to json file
+    with open('./data/forecast.json', 'w') as file:
+        json.dump(data_dict, file)
+
     #with open('./data/forecast.json', 'w') as file:
     #    # Write forecast in file
     #    file.write('{ {"forecast": ')
@@ -115,6 +132,8 @@ def main(show_forecast=False):
     #        i += 1
     #    # current data of eisbach in file
     #    file.write('}}}')
+
+    return data_dict
 
 if __name__ == "__main__":
     print(main(show_forecast=True))
