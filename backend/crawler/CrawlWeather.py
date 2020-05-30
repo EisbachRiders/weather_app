@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
+import os.path
 
 class CrawlWeather:
     def __init__(self, update=True, days_forecast=3):
@@ -16,13 +17,12 @@ class CrawlWeather:
 
     def getCreekData(self, date_start, date_end):
         categories = ['wassertemperatur', 'abfluss', 'wasserstand']
-        labels = {'wassertemperatur': 'water_temperature', 'abfluss': 'runoff', 'wasserstand': 'water_level'}
+        labels = {'wassertemperatur': 'waterTemperature', 'abfluss': 'runoff', 'wasserstand': 'waterLevel'}
 
         for category in categories:
             url = "https://www.gkd.bayern.de/de/fluesse/" + category + "/isar/muenchen-himmelreichbruecke-16515005/monatswerte/tabelle?beginn=" + date_start.strftime(
                 "%d.%m.%Y") + "&ende=" + date_end.strftime("%d.%m.%Y")
             r = requests.get(url)
-
             doc = BeautifulSoup(r.text, "html.parser")
             data = doc.select(".row2")
 
@@ -34,6 +34,8 @@ class CrawlWeather:
 
                 if not cat_val == "--":
                     cat_val = float(cat_val.replace(',', '.'))
+                    if category == 'abfluss' or category == 'wasserstand':
+                        break
                 else:
                     cat_val = float('NaN')
 
@@ -47,20 +49,33 @@ class CrawlWeather:
 
             if category == 'wassertemperatur':
                 creek_data = pd.DataFrame({labels[category]: value_list[:, 1]}, index=value_list[:, 0])
+            elif category == 'abfluss':
+                self.eisbach_runoff = cat_val
             else:
-                creek_data = pd.concat(
-                    [creek_data, pd.DataFrame({labels[category]: value_list[:, 1]}, index=value_list[:, 0])], axis=1)
+                self.eisbach_waterlevel = cat_val
+                #creek_data = pd.concat(
+                #    [creek_data, pd.DataFrame({labels[category]: value_list[:, 1]}, index=value_list[:, 0])], axis=1)
 
-                # old code, only determine min, max temperature
-                #if not element.text =="--":
-                    #if min_Temp == None:
-                    #    min_Temp = float(element.text.replace(',', '.'))
-                    #else:
-                    #    min_Temp = min(min_Temp, float(element.text.replace(',', '.')))
-                    #if max_Temp == None:
-                    #    max_Temp =float(element.text.replace(',', '.'))
-                    #else:
-                    #    max_Temp = max(max_Temp, float(element.text.replace(',', '.')))
+        # if crawling data delivers not the right hour format (not full and half hours), shifting data by 15min
+        creek_data.index = creek_data.index.map(lambda x: x+timedelta(minutes=15.0) if (x.minute == 15) or (x.minute == 45) else x)
+
+        # After crawling current data filter only even full hours (reduce data set)
+        creek_data = creek_data[(creek_data.index.hour % 2 == 0) & (creek_data.index.minute == 0)]
+        # After crawling current data check with stored data
+        if os.path.exists('./data/eisbach_data.csv'):
+            def dateparse(string_timestamp):
+                return datetime.strptime(string_timestamp, "%Y-%m-%d %H:%M:%S")
+
+            creek_data_stored = pd.read_csv('./data/eisbach_data.csv', delimiter=";", index_col='Date', parse_dates=True, date_parser=dateparse)
+            # add new values
+            creek_data_stored = pd.concat([creek_data_stored, creek_data[~creek_data.index.isin(creek_data_stored.index)]])
+            # update values with current eisbach data
+            creek_data_stored.update(creek_data['waterTemperature'])
+
+            creek_data = creek_data_stored
+        else:
+            # Create dummy column for air temperature if eisbach_data.csv not exists# Create dummy column for air temperature if eisbach_data.csv not exists
+            creek_data['airTemperature'] = float('NaN')
 
         return creek_data
 
@@ -69,8 +84,12 @@ class CrawlWeather:
         #url  = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/deutschland/muenchen/DE0006515.html'
         url = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/' + str(self.days_forecast)  + '_tagesvorhersage/deutschland/muenchen/DE0006515.html'
         r = requests.get(url)
-
         doc = BeautifulSoup(r.text, "html.parser")
+
+        # Get current air temperature
+        current_air_temperature = float(doc.find_all(class_="text--white beta")[0].text.split("°")[0])
+
+        # Get forecast data
         data = doc.select(".spaces-weather-grid .swg-row-wrapper")
         param_min = []
         param_max = []
@@ -112,11 +131,18 @@ class CrawlWeather:
         for i in range(0, len(param_min)):
             forecast_data.append((param_rain[i], param_sun[i], param_min[i], param_max[i]))
 
-        return forecast_data
+        return current_air_temperature, forecast_data
 
     def getData(self):
-        self.weather_forecast = self.getWeather()
+        # Get current temperature and weather forecast for defined days
+        self.current_air_temperature, self.weather_forecast = self.getWeather()
         # Get Eisbach Data
-        self.eisbach_data = self.getCreekData(datetime.now() - timedelta(days=1), datetime.now())#Get temperatures from yesterday
+        self.eisbach_data = self.getCreekData(datetime.now() - timedelta(days=1), datetime.now())  # Get temperatures from yesterday
+
+        # add current air temperature to eisbach data
+        self.eisbach_data = self.eisbach_data.sort_index(ascending=True)
+        # update last value with current air temperature
+        self.eisbach_data.loc[self.eisbach_data.index == max(self.eisbach_data.index), 'airTemperature'] = self.current_air_temperature
+
 
 
