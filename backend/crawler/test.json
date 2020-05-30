@@ -1,0 +1,14 @@
+{
+  "forecast": {
+    "23.05.2020": { "eisbachTempMin": 13.5, "eisbachTempMax": 15.6 },
+    "24.05.2020": { "eisbachTempMin": 13.5, "eisbachTempMax": 15.5 },
+    "25.05.2020": { "eisbachTempMin": 13.5, "eisbachTempMax": 15.0 }
+  },
+  "hourly": {
+    0: { "waterTemperature": 15.4, "runoff": 24.4, "waterLevel": 145.0 },
+    4: { "waterTemperature": 15.0, "runoff": 24.4, "waterLevel": 145.0 },
+    8: { "waterTemperature": 15.0, "runoff": 23.8, "waterLevel": 143.0 },
+    12: { "waterTemperature": 15.3, "runoff": 24.1, "waterLevel": 144.0 },
+    16: { "waterTemperature": 15.6, "runoff": 24.4, "waterLevel": 145.0 }
+  }
+}
