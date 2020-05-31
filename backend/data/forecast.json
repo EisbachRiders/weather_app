@@ -1,1 +1,26 @@
-{"today": {"Date": "30.05.2020", "minWaterTemp": 13.5, "maxWaterTemp": 15.0, "maxTemp": 16.0}, "tomorrow": {"Date": "31.05.2020", "minWaterTemp": 13.0, "maxWaterTemp": 14.5, "maxTemp": 17.0}, "next": {"Date": "01.06.2020", "minWaterTemp": 13.0, "maxWaterTemp": 14.5, "maxTemp": 20.0}, "current": {"temp": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, 14.0, 14.0], "waterTemp": [14.1, 14.0, 13.6, 13.5, 13.6, 14.2, 14.3, 14.4, 14.2], "waterLevel": 138.0, "runoff": 22.3}}
+{
+  "today": {
+    "Date": "31.05.2020",
+    "minWaterTemp": 13.2,
+    "maxWaterTemp": 15.0,
+    "maxTemp": 18.0
+  },
+  "tomorrow": {
+    "Date": "01.06.2020",
+    "minWaterTemp": 13.5,
+    "maxWaterTemp": 15.5,
+    "maxTemp": 21.0
+  },
+  "next": {
+    "Date": "02.06.2020",
+    "minWaterTemp": 14.0,
+    "maxWaterTemp": 16.0,
+    "maxTemp": 21.0
+  },
+  "current": {
+    "temp": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 11.0],
+    "waterTemp": [14.3, 14.1, 13.9, 13.6, 13.5, 13.3, 13.2, 13.2, 13.6],
+    "waterLevel": 140.0,
+    "runoff": 22.9
+  }
+}

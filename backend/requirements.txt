@@ -1,8 +1,6 @@
-crawler
-datetime
-Flask
-math
-numpy
-pandas
-sklearn
-Werkzeug
+crawler==0.0.2
+Flask==1.0.3
+numpy==1.16.4
+pandas==0.24.2
+sklearn==0.0
+Werkzeug==0.15.4
