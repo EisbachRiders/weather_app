@@ -120,8 +120,9 @@ def main(show_forecast=False):
             json.dump(data_dict, file)
 
         # Wait for next update
-        sleep_time = (2 * 60 + randrange(0, 15)) * 60  # random update time between 2 hours and 2.25 hours converted to seconds
-        time.sleep(sleep_time)
+        # sleep_time = (2 * 60 + randrange(0, 15)) * 60  # random update time between 2 hours and 2.25 hours converted to seconds
+        # time.sleep(sleep_time)
+        return data_dict
 
 
 if __name__ == "__main__":
