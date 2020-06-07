@@ -1,0 +1,28 @@
+{
+  "current": {
+    "runoff": 22.9,
+    "temp": [13.2, 12.4, 12.4, 11.7, 12.8, 12.7, 12.6, 11.9, 10.6],
+    "waterLevel": 143.0,
+    "waterTemp": [16.1, 15.6, 14.7, 14.6, 14.6, 14.6, 14.5, 14.4, 14.2]
+  },
+  "next": {
+    "Date": "09.06.2020",
+    "maxTemp": 12.0,
+    "maxWaterTemp": 15.5,
+    "minWaterTemp": 14.0
+  },
+  "today": {
+    "Date": "07.06.2020",
+    "maxTemp": 14.0,
+    "maxWaterTemp": 16.5,
+    "minWaterTemp": 15.0
+  },
+  "tomorrow": {
+    "Date": "08.06.2020",
+    "maxTemp": 13.0,
+    "maxWaterTemp": 16.0,
+    "minWaterTemp": 14.5
+  }
+}
+
+{"current":{"runoff":22.9,"temp":[13.2,12.4,12.4,11.7,12.8,12.7,12.6,11.9,10.6],"waterLevel":143.0,"waterTemp":[16.1,15.6,14.7,14.6,14.6,14.6,14.5,14.4,14.2]},"next":{"Date":"09.06.2020","maxTemp":12.0,"maxWaterTemp":15.5,"minWaterTemp":14.0},"today":{"Date":"07.06.2020","maxTemp":14.0,"maxWaterTemp":16.5,"minWaterTemp":15.0},"tomorrow":{"Date":"08.06.2020","maxTemp":13.0,"maxWaterTemp":16.0,"minWaterTemp":14.5}}

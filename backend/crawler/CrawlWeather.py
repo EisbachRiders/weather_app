@@ -1,3 +1,4 @@
+# coding: utf-8
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
@@ -73,7 +74,7 @@ class CrawlWeather:
 
             creek_data_stored = pd.read_csv('./data/eisbach_data.csv', delimiter=";", index_col='Date', parse_dates=True, date_parser=dateparse)
             # add new values
-            creek_data_stored = pd.concat([creek_data_stored, creek_data[~creek_data.index.isin(creek_data_stored.index)]])
+            creek_data_stored = pd.concat([creek_data_stored, creek_data[~creek_data.index.isin(creek_data_stored.index)]],sort=False)
             # update values with current eisbach data
             creek_data_stored.update(creek_data[['waterTemperature', 'airTemperature']])
             creek_data = creek_data_stored
@@ -88,7 +89,7 @@ class CrawlWeather:
         doc = BeautifulSoup(r.text, "html.parser")
 
         # Get current air temperature
-        #current_air_temperature = float(doc.find_all(class_="text--white beta")[0].text.split("°")[0])
+     
 
         # Get forecast data
         data = doc.select(".spaces-weather-grid .swg-row-wrapper")
