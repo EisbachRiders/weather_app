@@ -27,6 +27,9 @@ def main(show_forecast=False):
                                          Data.eisbach_data[Data.eisbach_data.index >= pd.to_datetime(date.today())][
                                              'waterTemperature'].max()
 
+    eisbach_temp_min = round(eisbach_temp_min*2, 0)*0.5
+    eisbach_temp_max = round(eisbach_temp_max*2, 0)*0.5
+
     # Check if today a forecast was already performed, if yes then skip ne calculation
     if forecast_today:
         eisbach_temp_max_yest = Data.eisbach_data[Data.eisbach_data.index < pd.to_datetime(date.today())]['waterTemperature'].max()
@@ -99,9 +102,9 @@ def main(show_forecast=False):
 
     # Check if current eisbach temperature is already lower/higher than the prediction and replace
     # if current Eisbach_temperature is already lower than the prediction
-    df.iloc[0,-2] = min(df.iloc[0,-2], eisbach_temp_min)
+    df.iloc[-3, -2] = min(df.iloc[-3, -2], eisbach_temp_min)
     # if current Eisbach_temperature is already higher than the prediction
-    df.iloc[0,-1] = max(df.iloc[0,-1], eisbach_temp_max)
+    df.iloc[-3, -1] = max(df.iloc[-3, -1], eisbach_temp_max)
 
     # Prepare data for output
     forecast_return = df[['minWaterTemp', 'maxWaterTemp', 'maxTemp']][-3:]
@@ -122,7 +125,6 @@ def main(show_forecast=False):
                             'waterTemp': list(data_returned['waterTemperature'].iloc[-9:].to_numpy()),
                             'waterLevel': Data.eisbach_waterlevel,
                             'runoff': Data.eisbach_runoff }
-
     # Write to json file
     with open('./data/forecast.json', 'w') as file:
         json.dump(data_dict, file)
