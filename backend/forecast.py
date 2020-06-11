@@ -145,3 +145,5 @@ def forecast(show_forecast=False):
 
 if __name__ == "__forecast__":
     print(forecast(show_forecast=True))
+
+forecast()
