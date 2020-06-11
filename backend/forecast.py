@@ -8,7 +8,7 @@ import json
 from ftplib import FTP
 import time
 
-def forecast():
+def forecast(show_forecast=False):
     #Connect to FTP
     ftp = FTP('w012ebdc.kasserver.com')
     ftp.login('f00e94e0','funtimes310') 
@@ -141,9 +141,6 @@ def forecast():
     file = open('./data/forecast.json','rb') 
     ftp.storbinary('STOR forecast.json', file)
     ftp.quit()
-    print('main was run')
 
-def __init__(self, name):
-    self.name = name
-
-forecast()
+if __name__ == '__main__':
+    forecast()
