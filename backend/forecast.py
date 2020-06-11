@@ -106,9 +106,9 @@ def forecast():
     df.to_csv('/tmp/forecast.csv', index_label='Date', sep=";")
     Data.eisbach_data.to_csv('/tmp/eisbach_data.csv', index_label='Date', sep=";")
     file1 = open('/tmp/forecast.csv','rb') 
-    ftp.storbinary('STOR forecast.csv', file)
+    ftp.storbinary('STOR forecast.csv', file1)
     file2 = open('/tmp/eisbach_data.csv','rb') 
-    ftp.storbinary('STOR eisbach_data.csv', file)
+    ftp.storbinary('STOR eisbach_data.csv', file2)
 
     # Check if current eisbach temperature is already lower/higher than the prediction and replace
     # if current Eisbach_temperature is already lower than the prediction
