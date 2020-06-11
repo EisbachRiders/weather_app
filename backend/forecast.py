@@ -8,7 +8,7 @@ import json
 from ftplib import FTP
 import time
 
-def forecast(show_forecast=False):
+def forecast():
     #Connect to FTP
     ftp = FTP('w012ebdc.kasserver.com')
     ftp.login('f00e94e0','funtimes310') 
