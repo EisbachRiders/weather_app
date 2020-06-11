@@ -143,5 +143,4 @@ def forecast():
     ftp.storbinary('STOR forecast.json', file)
     ftp.quit()
 
-if __name__ == '__main__':
-    forecast()
+forecast()
