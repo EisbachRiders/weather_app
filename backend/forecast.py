@@ -23,12 +23,13 @@ def forecast():
     # Get previous forecasts if available
     forecast_today = True  # parameter to check if forecast prediction was already performed today
     forecast_exist = False  # parameter if forecast.csv exists
-   
-    df = pd.read_csv("/tmp/forecast.csv", index_col='Date', sep=";")
-    forecast_exist = True
-    if len(df.index) > 2:
-         if df.index[-3] == datetime.now().strftime("%d.%m.%Y"):
-            forecast_today = False
+    
+    if os.path.exists('/tmp/forecast.csv'):
+        df = pd.read_csv("/tmp/forecast.csv", index_col='Date', sep=";")
+        forecast_exist = True
+        if len(df.index) > 2:
+            if df.index[-3] == datetime.now().strftime("%d.%m.%Y"):
+                forecast_today = False
 
     # Extract minimum and maximum current Eisbach temperatures:
     eisbach_temp_min, eisbach_temp_max = Data.eisbach_data[Data.eisbach_data.index >= pd.to_datetime(date.today())][
