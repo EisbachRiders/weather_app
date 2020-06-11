@@ -143,7 +143,7 @@ def forecast(show_forecast=False):
     ftp.quit()
     print('main was run')
 
-if __name__ == "__forecast__":
-    print(forecast(show_forecast=True))
+def __init__(self, name):
+    self.name = name
 
 forecast()
