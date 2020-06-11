@@ -5,8 +5,16 @@ import math
 from predict_temperature import predict_temperature
 import os.path
 import json
+from ftplib import FTP
+import time
 
 def forecast(show_forecast=False):
+    #Connect to FTP
+    ftp = FTP('w012ebdc.kasserver.com')
+    ftp.login('f00e94e0','funtimes310') 
+    ftp.cwd('eisbach-riders/forecast')
+    ftp.retrbinary("RETR " + 'forecast.csv', open('./data/forecast.csv', 'wb').write)
+  
     # Crawl weather data including Eisbach Temperature
     Data = CrawlWeather(days_forecast=3)  # 3 and 7 days forecast available
     # Data.eisbach_data.dropna(inplace=True, axis=0)
@@ -14,12 +22,12 @@ def forecast(show_forecast=False):
     # Get previous forecasts if available
     forecast_today = True  # parameter to check if forecast prediction was already performed today
     forecast_exist = False  # parameter if forecast.csv exists
-    if os.path.exists('./data/forecast.csv'):
-        df = pd.read_csv('./data/forecast.csv', index_col='Date', sep=";")
-        forecast_exist = True
-        if len(df.index) > 2:
-            if df.index[-3] == datetime.now().strftime("%d.%m.%Y"):
-                forecast_today = False
+   
+    df = pd.read_csv("./data/forecast.csv", index_col='Date', sep=";")
+    forecast_exist = True
+    if len(df.index) > 2:
+         if df.index[-3] == datetime.now().strftime("%d.%m.%Y"):
+            forecast_today = False
 
     # Extract minimum and maximum current Eisbach temperatures:
     eisbach_temp_min, eisbach_temp_max = Data.eisbach_data[Data.eisbach_data.index >= pd.to_datetime(date.today())][
@@ -121,13 +129,19 @@ def forecast(show_forecast=False):
     data_dict['current'] = {'temp': list(data_returned['airTemperature'].iloc[-9:].to_numpy()),
                             'waterTemp': list(data_returned['waterTemperature'].iloc[-9:].to_numpy()),
                             'waterLevel': Data.eisbach_waterlevel,
-                            'runoff': Data.eisbach_runoff }
+                            'runoff': Data.eisbach_runoff,
+                            'timestamp': time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+                            }
 
     # Write to json file
+    
     with open('./data/forecast.json', 'w') as file:
         json.dump(data_dict, file)
-    
-    return('main was run')
+    # upload to ftp
+    file = open('./data/forecast.json','rb') 
+    ftp.storbinary('STOR forecast.json', file)
+    ftp.quit()
+    print('main was run')
 
 if __name__ == "__forecast__":
     print(forecast(show_forecast=True))
