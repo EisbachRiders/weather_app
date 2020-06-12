@@ -15,11 +15,11 @@ def forecast():
     ftp.login('f00e94e0','funtimes310') 
     ftp.cwd('eisbach-riders/forecast')
     ftp.retrbinary("RETR " + 'forecast.csv', open('/tmp/forecast.csv', 'wb').write)
-  
+    ftp.retrbinary("RETR " + 'forecast.json', open('/tmp/forecast.json', 'wb').write)
     # Crawl weather data including Eisbach Temperature
     Data = CrawlWeather(days_forecast=3)  # 3 and 7 days forecast available
     # Data.eisbach_data.dropna(inplace=True, axis=0)
-
+    
     # Get previous forecasts if available
     forecast_today = True  # parameter to check if forecast prediction was already performed today
     forecast_exist = False  # parameter if forecast.csv exists
@@ -131,8 +131,14 @@ def forecast():
 
     data_returned = Data.eisbach_data.reset_index()
 
+    with open('/tmp/forecast.json') as json_file:
+        file3 = json.load(json_file)
+        new = list(data_returned['airTemperature'].iloc[-9:].to_numpy()).pop()
+        file3["current"]["temp"].pop(0)
+        file3["current"]["temp"].append(new)
+
     data_dict = forecast_return[['Date', 'minWaterTemp', 'maxWaterTemp', 'maxTemp']].to_dict('index')
-    data_dict['current'] = {'temp': list(data_returned['airTemperature'].iloc[-9:].to_numpy()),
+    data_dict['current'] = {'temp': file3,
                             'waterTemp': list(data_returned['waterTemperature'].iloc[-9:].to_numpy()),
                             'waterLevel': Data.eisbach_waterlevel,
                             'runoff': Data.eisbach_runoff,
