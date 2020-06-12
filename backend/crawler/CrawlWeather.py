@@ -147,7 +147,6 @@ class CrawlWeather:
         self.current_air_temperature, self.weather_forecast = self.getWeather()
         # Get Eisbach Data
         self.eisbach_data = self.getCreekData(datetime.now() - timedelta(days=1), datetime.now())  # Get temperatures from yesterday
-
         # add current air temperature to eisbach data
         self.eisbach_data = self.eisbach_data.sort_index(ascending=True)
         # update last value with current air temperature
