@@ -138,7 +138,7 @@ def forecast():
         file3["current"]["temp"].append(new)
 
     data_dict = forecast_return[['Date', 'minWaterTemp', 'maxWaterTemp', 'maxTemp']].to_dict('index')
-    data_dict['current'] = {'temp': file3,
+    data_dict['current'] = {'temp': file3["current"]["temp"],
                             'waterTemp': list(data_returned['waterTemperature'].iloc[-9:].to_numpy()),
                             'waterLevel': Data.eisbach_waterlevel,
                             'runoff': Data.eisbach_runoff,
