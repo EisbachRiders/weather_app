@@ -1,6 +1,7 @@
 from crawler import CrawlWeather
 from datetime import datetime, timedelta, date
 import pandas as pd
+import numpy as np
 import math
 from predict_temperature import predict_temperature
 import os.path
@@ -137,11 +138,13 @@ def forecast():
     #    new = list(data_returned['airTemperature'].iloc[-9:].to_numpy()).pop()
     #    file3["current"]["temp"].pop(0)
     #    file3["current"]["temp"].append(new)
-    list1 = ['NaN' if x is np.nan else x for x in list(data_returned['airTemperature'].iloc[-9:].to_numpy())]
-    list2 = ['NaN' if x is np.nan else x for x in list(data_returned['waterTemperature'].iloc[-9:].to_numpy())]
+    list1 = list(data_returned['airTemperature'].iloc[-9:].to_numpy())
+    list1_noNaN = pd.Series(list1).fillna("None").tolist()
+    list2 = list(data_returned['waterTemperature'].iloc[-9:].to_numpy())
+    list2_noNaN = pd.Series(list1).fillna("None").tolist()
     data_dict = forecast_return[['Date', 'minWaterTemp', 'maxWaterTemp', 'maxTemp']].to_dict('index')
-    data_dict['current'] = {'temp': list1,
-                            'waterTemp': list2,
+    data_dict['current'] = {'temp': list1_noNaN,
+                            'waterTemp': list2_noNaN,
                             'waterLevel': Data.eisbach_waterlevel,
                             'runoff': Data.eisbach_runoff,
                             'timestamp': time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
