@@ -9,7 +9,7 @@ import json
 from ftplib import FTP
 import time
 
-def forecast():
+def main():
     show_forecast=False
     #Connect to FTP
     ftp = FTP(os.environ.get('SERVER'))
@@ -159,4 +159,4 @@ def forecast():
     ftp.storbinary('STOR forecast.json', file)
     ftp.quit()
 
-forecast()
+main()
