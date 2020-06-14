@@ -14,15 +14,15 @@ def forecast():
     ftp = FTP(os.environ.get('SERVER'))
     ftp.login(os.environ.get('USERNAME'),os.environ.get('PASSWORD'))
     ftp.cwd('eisbach-riders/forecast')
-    ftp.retrbinary("RETR " + 'forecast.csv', open('./tmp/forecast.csv', 'wb').write)
-    ftp.retrbinary("RETR " + 'forecast.json', open('./tmp/forecast.json', 'wb').write)
+    ftp.retrbinary("RETR " + 'forecast.csv', open('/tmp/forecast.csv', 'wb').write)
+    ftp.retrbinary("RETR " + 'forecast.json', open('/tmp/forecast.json', 'wb').write)
 
     # Get previous forecasts if available
     forecast_today = True  # parameter to check if forecast prediction was already performed today
     forecast_exist = False  # parameter if forecast.csv exists
     
-    if os.path.exists('./tmp/forecast.csv'):
-        df = pd.read_csv("./tmp/forecast.csv", index_col='Date', sep=";")
+    if os.path.exists('/tmp/forecast.csv'):
+        df = pd.read_csv("/tmp/forecast.csv", index_col='Date', sep=";")
         forecast_exist = True
         if len(df.index) > 2:
             if df.index[-3] == datetime.now().strftime("%d.%m.%Y"):
@@ -104,11 +104,11 @@ def forecast():
 
     # save data to csv file
     # red = Data.eisbach_data[-36:-1:4][['waterTemperature', 'runoff', 'waterLevel']].sort_index(ascending=True)
-    df.to_csv('./tmp/forecast.csv', index_label='Date', sep=";")
-    Data.eisbach_data.to_csv('./tmp/eisbach_data.csv', index_label='Date', sep=";")
-    file1 = open('./tmp/forecast.csv','rb')
+    df.to_csv('/tmp/forecast.csv', index_label='Date', sep=";")
+    Data.eisbach_data.to_csv('/tmp/eisbach_data.csv', index_label='Date', sep=";")
+    file1 = open('/tmp/forecast.csv','rb')
     ftp.storbinary('STOR forecast.csv', file1)
-    file2 = open('./tmp/eisbach_data.csv','rb')
+    file2 = open('/tmp/eisbach_data.csv','rb')
     ftp.storbinary('STOR eisbach_data.csv', file2)
 
     # Check if current eisbach temperature is already lower/higher than the prediction and replace
@@ -149,10 +149,10 @@ def forecast():
 
     # Write to json file
     
-    with open('./tmp/forecast.json', 'w') as file:
+    with open('/tmp/forecast.json', 'w') as file:
         json.dump(data_dict, file)
     # upload to ftp
-    file = open('./tmp/forecast.json','rb')
+    file = open('/tmp/forecast.json','rb')
     ftp.storbinary('STOR forecast.json', file)
     ftp.quit()
 

@@ -21,7 +21,7 @@ class CrawlWeather:
         ftp = FTP(os.environ.get('SERVER'))
         ftp.login(os.environ.get('USERNAME'),os.environ.get('PASSWORD'))
         ftp.cwd('eisbach-riders/forecast')
-        ftp.retrbinary("RETR " + 'eisbach_data.csv', open('./tmp/eisbach_data.csv', 'wb').write)
+        ftp.retrbinary("RETR " + 'eisbach_data.csv', open('/tmp/eisbach_data.csv', 'wb').write)
         ftp.quit()
 
         categories = ['wassertemperatur', 'abfluss', 'wasserstand', 'airtemperature']
@@ -81,11 +81,11 @@ class CrawlWeather:
         creek_data.dropna(inplace=True)
         creek_data = creek_data[(creek_data.index.hour % 2 == 0) & (creek_data.index.minute == 0)]
         # After crawling current data check with stored data
-        if os.path.exists('./tmp/eisbach_data.csv'):
+        if os.path.exists('/tmp/eisbach_data.csv'):
             def dateparse(string_timestamp):
                 return datetime.strptime(string_timestamp, "%Y-%m-%d %H:%M:%S")
 
-            creek_data_stored = pd.read_csv('./tmp/eisbach_data.csv', delimiter=";", index_col='Date',
+            creek_data_stored = pd.read_csv('/tmp/eisbach_data.csv', delimiter=";", index_col='Date',
                                             parse_dates=True, date_parser=dateparse)
             # add new values
             creek_data_stored = pd.concat(
