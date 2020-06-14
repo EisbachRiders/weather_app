@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import os.path
 from ftplib import FTP
+import os
 
 class CrawlWeather:
     def __init__(self, update=True, days_forecast=3):
@@ -17,8 +18,8 @@ class CrawlWeather:
 
     def getCreekData(self, date_start, date_end):
         #Connect to FTP
-        ftp = FTP('w012ebdc.kasserver.com')
-        ftp.login('f00e94e0','funtimes310')
+        ftp = FTP(os.environ.get('SERVER'))
+        ftp.login(os.environ.get('USERNAME'),os.environ.get('PASSWORD'))
         ftp.cwd('eisbach-riders/forecast')
         ftp.retrbinary("RETR " + 'eisbach_data.csv', open('./tmp/eisbach_data.csv', 'wb').write)
         ftp.quit()

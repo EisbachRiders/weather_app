@@ -11,8 +11,8 @@ import time
 def forecast():
     show_forecast=False
     #Connect to FTP
-    ftp = FTP('w012ebdc.kasserver.com')
-    ftp.login('f00e94e0','funtimes310') 
+    ftp = FTP(os.environ.get('SERVER'))
+    ftp.login(os.environ.get('USERNAME'),os.environ.get('PASSWORD'))
     ftp.cwd('eisbach-riders/forecast')
     ftp.retrbinary("RETR " + 'forecast.csv', open('./tmp/forecast.csv', 'wb').write)
     ftp.retrbinary("RETR " + 'forecast.json', open('./tmp/forecast.json', 'wb').write)
@@ -137,10 +137,11 @@ def forecast():
     #    new = list(data_returned['airTemperature'].iloc[-9:].to_numpy()).pop()
     #    file3["current"]["temp"].pop(0)
     #    file3["current"]["temp"].append(new)
-
+    list1 = ['NaN' if x is np.nan else x for x in list(data_returned['airTemperature'].iloc[-9:].to_numpy())]
+    list2 = ['NaN' if x is np.nan else x for x in list(data_returned['waterTemperature'].iloc[-9:].to_numpy())]
     data_dict = forecast_return[['Date', 'minWaterTemp', 'maxWaterTemp', 'maxTemp']].to_dict('index')
-    data_dict['current'] = {'temp': list(data_returned['airTemperature'].iloc[-9:].to_numpy()),
-                            'waterTemp': list(data_returned['waterTemperature'].iloc[-9:].to_numpy()),
+    data_dict['current'] = {'temp': list1,
+                            'waterTemp': list2,
                             'waterLevel': Data.eisbach_waterlevel,
                             'runoff': Data.eisbach_runoff,
                             'timestamp': time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
