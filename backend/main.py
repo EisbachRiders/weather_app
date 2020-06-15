@@ -8,6 +8,7 @@ import os.path
 import json
 from ftplib import FTP
 import time
+import requests
 
 def main():
     show_forecast=False
@@ -132,12 +133,16 @@ def main():
 
     data_returned = Data.eisbach_data.reset_index()
 
-    # Patrick: we don't need this because the entire air temperature list is received
-    #with open('/tmp/forecast.json') as json_file:
-    #    file3 = json.load(json_file)
-    #    new = list(data_returned['airTemperature'].iloc[-9:].to_numpy()).pop()
-    #    file3["current"]["temp"].pop(0)
-    #    file3["current"]["temp"].append(new)
+    # Get weather forecast
+    url_daily = "https://api.climacell.co/v3/weather/forecast/daily"
+    params_daily = dict(apikey='oTQh2hYYLn0O5SE4VTDPSZA0lf3UUdm0', lat=48.14794, lon=11.592334, fields=['weather_code', 'temp'])
+    response_daily = requests.request("GET", url_daily,params=params_daily)
+    weather_forecast_daily = response_daily.json()
+    url_hourly = "https://api.climacell.co/v3/weather/forecast/hourly"
+    params_hourly = dict(apikey='oTQh2hYYLn0O5SE4VTDPSZA0lf3UUdm0', lat=48.14794, lon=11.592334, fields=['weather_code', 'temp'])
+    response_hourly = requests.request("GET", url_hourly,params=params_hourly)
+    weather_forecast_hourly = response_hourly.json()
+
     list1 = list(data_returned['airTemperature'].iloc[-9:].to_numpy())
     list1_noNaN = pd.Series(list1).fillna("None").tolist()
     list2 = list(data_returned['waterTemperature'].iloc[-9:].to_numpy())
@@ -149,6 +154,8 @@ def main():
                             'runoff': Data.eisbach_runoff,
                             'timestamp': time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
                             }
+    data_dict['weatherApiDaily'] = weather_forecast_daily
+    data_dict['weatherApiHourly'] = weather_forecast_hourly
 
     # Write to json file
     
