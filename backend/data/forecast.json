@@ -1,1 +1,1034 @@
-{"today": {"Date": "14.06.2020", "minWaterTemp": 14.5, "maxWaterTemp": 16.2, "maxTemp": 15.0}, "tomorrow": {"Date": "15.06.2020", "minWaterTemp": 14.0, "maxWaterTemp": 15.5, "maxTemp": 15.0}, "next": {"Date": "16.06.2020", "minWaterTemp": 14.0, "maxWaterTemp": 15.5, "maxTemp": 16.0}, "current": {"temp": ["None", 14.5, 14.1, 13.6, 13.3, 14.2, 14.6, 14.0, 14.0], "waterTemp": ["None", 14.5, 14.1, 13.6, 13.3, 14.2, 14.6, 14.0, 14.0], "waterLevel": 147.0, "runoff": 24.2, "timestamp": "2020-06-14 14:38:58"}}
+{
+  "today": {
+    "Date": "15.06.2020",
+    "minWaterTemp": 13.5,
+    "maxWaterTemp": 16.0,
+    "maxTemp": 15.0
+  },
+  "tomorrow": {
+    "Date": "16.06.2020",
+    "minWaterTemp": 14.0,
+    "maxWaterTemp": 15.5,
+    "maxTemp": 15.0
+  },
+  "next": {
+    "Date": "17.06.2020",
+    "minWaterTemp": 14.0,
+    "maxWaterTemp": 15.5,
+    "maxTemp": 22.0
+  },
+  "current": {
+    "temp": [13.2, 12.6, 12.3, 12.3, 12.7, 12.8, 13.1, 13.6, 14.1],
+    "waterTemp": [14.2, 14.0, 13.6, 13.5, 13.6, 13.7, 13.5, 13.7, 13.7],
+    "waterLevel": 148.0,
+    "runoff": 24.5,
+    "timestamp": "2020-06-15 13:09:20"
+  },
+  "weatherApiDaily": [
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-15T11:00:00Z",
+          "min": { "value": 12.85, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-15T08:00:00Z",
+          "max": { "value": 13.95, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "rain" },
+      "observation_time": { "value": "2020-06-15" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-17T03:00:00Z",
+          "min": { "value": 12.36, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-16T15:00:00Z",
+          "max": { "value": 18.55, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-16" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-17T21:00:00Z",
+          "min": { "value": 11.85, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-17T14:00:00Z",
+          "max": { "value": 22.72, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-17" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-19T03:00:00Z",
+          "min": { "value": 11.85, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-18T13:00:00Z",
+          "max": { "value": 20.45, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-19T04:00:00Z",
+          "min": { "value": 11.69, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-19T13:00:00Z",
+          "max": { "value": 22.61, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-19" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-21T00:00:00Z",
+          "min": { "value": 12.26, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-20T12:00:00Z",
+          "max": { "value": 20.35, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-20" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-22T00:00:00Z",
+          "min": { "value": 13.6, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-21T15:00:00Z",
+          "max": { "value": 14.36, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "rain" },
+      "observation_time": { "value": "2020-06-21" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-22T06:00:00Z",
+          "min": { "value": 14.71, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-22T15:00:00Z",
+          "max": { "value": 22.95, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-22" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-24T03:00:00Z",
+          "min": { "value": 13.35, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-23T15:00:00Z",
+          "max": { "value": 24.41, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "partly_cloudy" },
+      "observation_time": { "value": "2020-06-23" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-24T06:00:00Z",
+          "min": { "value": 15.68, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-24T12:00:00Z",
+          "max": { "value": 23.95, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "mostly_cloudy" },
+      "observation_time": { "value": "2020-06-24" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-26T03:00:00Z",
+          "min": { "value": 17.15, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-25T15:00:00Z",
+          "max": { "value": 27.89, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-25" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-27T03:00:00Z",
+          "min": { "value": 15.55, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-26T12:00:00Z",
+          "max": { "value": 26.38, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-26" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-28T03:00:00Z",
+          "min": { "value": 17.28, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-27T15:00:00Z",
+          "max": { "value": 24.78, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "mostly_cloudy" },
+      "observation_time": { "value": "2020-06-27" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-29T03:00:00Z",
+          "min": { "value": 18.2, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-28T15:00:00Z",
+          "max": { "value": 26.76, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-28" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    },
+    {
+      "temp": [
+        {
+          "observation_time": "2020-06-30T03:00:00Z",
+          "min": { "value": 16.75, "units": "C" }
+        },
+        {
+          "observation_time": "2020-06-29T15:00:00Z",
+          "max": { "value": 28.76, "units": "C" }
+        }
+      ],
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-29" },
+      "lat": 48.14794,
+      "lon": 11.592334
+    }
+  ],
+  "weatherApiHourly": [
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.1, "units": "C" },
+      "weather_code": { "value": "rain" },
+      "observation_time": { "value": "2020-06-15T13:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.03, "units": "C" },
+      "weather_code": { "value": "rain" },
+      "observation_time": { "value": "2020-06-15T14:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.97, "units": "C" },
+      "weather_code": { "value": "rain" },
+      "observation_time": { "value": "2020-06-15T15:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.87, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-15T16:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.81, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-15T17:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.64, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-15T18:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.5, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-15T19:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.31, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-15T20:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.11, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-15T21:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.9, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-15T22:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.76, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-15T23:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.68, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-16T00:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.6, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-16T01:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.62, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-16T02:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.61, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T03:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.6, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T04:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.66, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T05:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.83, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T06:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.09, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T07:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.47, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T08:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.91, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T09:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.24, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T10:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.49, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T11:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.76, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T12:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 15.02, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T13:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 15.44, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-16T14:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 15.64, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T15:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 15.3, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-16T16:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 15.43, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T17:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 15.26, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-16T18:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.58, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-16T19:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.9, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-16T20:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.53, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-16T21:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.14, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-16T22:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.79, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-16T23:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.35, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T00:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.04, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T01:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 11.85, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T02:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 11.56, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T03:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 11.28, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T04:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 11.54, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T05:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 12.85, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T06:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.69, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T07:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.01, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T08:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.57, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T09:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 18.6, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T10:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 19.78, "units": "C" },
+      "weather_code": { "value": "mostly_cloudy" },
+      "observation_time": { "value": "2020-06-17T11:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 20.79, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T12:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 21.58, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T13:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 21.91, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T14:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 21.28, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T15:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 20.72, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T16:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 19.63, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T17:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 18.6, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T18:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.3, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T19:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.19, "units": "C" },
+      "weather_code": { "value": "partly_cloudy" },
+      "observation_time": { "value": "2020-06-17T20:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.57, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-17T21:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-17T22:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.65, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-17T23:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.45, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T00:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.31, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T01:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.16, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T02:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.19, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T03:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.12, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T04:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.25, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T05:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.61, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T06:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.81, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T07:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.32, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T08:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 15.02, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T09:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 15.4, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T10:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.29, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T11:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.03, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T12:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.03, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T13:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.03, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T14:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.15, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T15:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.15, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T16:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.15, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T17:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.39, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T18:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.39, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T19:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.39, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-18T20:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.41, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T21:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.41, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T22:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.41, "units": "C" },
+      "weather_code": { "value": "cloudy" },
+      "observation_time": { "value": "2020-06-18T23:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.86, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T00:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.86, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T01:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.86, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T02:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.31, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T03:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.31, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T04:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.31, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T05:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.9, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-19T06:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.9, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-19T07:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.9, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-19T08:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.54, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-19T09:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.54, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-19T10:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.54, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-19T11:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.09, "units": "C" },
+      "weather_code": { "value": "rain" },
+      "observation_time": { "value": "2020-06-19T12:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.09, "units": "C" },
+      "weather_code": { "value": "rain" },
+      "observation_time": { "value": "2020-06-19T13:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.09, "units": "C" },
+      "weather_code": { "value": "rain" },
+      "observation_time": { "value": "2020-06-19T14:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.7, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-19T15:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.7, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-19T16:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 17.7, "units": "C" },
+      "weather_code": { "value": "rain_light" },
+      "observation_time": { "value": "2020-06-19T17:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.89, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T18:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.89, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T19:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 16.89, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T20:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.15, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T21:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.15, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T22:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.15, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-19T23:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 14.15, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-20T00:00:00.000Z" }
+    },
+    {
+      "lon": 11.592334,
+      "lat": 48.14794,
+      "temp": { "value": 13.29, "units": "C" },
+      "weather_code": { "value": "drizzle" },
+      "observation_time": { "value": "2020-06-20T01:00:00.000Z" }
+    }
+  ]
+}
