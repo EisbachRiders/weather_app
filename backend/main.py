@@ -141,7 +141,7 @@ def main():
     list1 = list(data_returned['airTemperature'].iloc[-9:].to_numpy())
     list1_noNaN = pd.Series(list1).fillna("None").tolist()
     list2 = list(data_returned['waterTemperature'].iloc[-9:].to_numpy())
-    list2_noNaN = pd.Series(list1).fillna("None").tolist()
+    list2_noNaN = pd.Series(list2).fillna("None").tolist()
     data_dict = forecast_return[['Date', 'minWaterTemp', 'maxWaterTemp', 'maxTemp']].to_dict('index')
     data_dict['current'] = {'temp': list1_noNaN,
                             'waterTemp': list2_noNaN,
