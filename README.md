@@ -3,7 +3,7 @@
   Eisbach Riders
 </h1>
 
-This website is an mobile app AND backend API to predict the weather at the Eisbach for the brand **Eisbach Riders**.
+This website is a mobile app AND backend API to predict the weather at the Eisbach for the brand **Eisbach Riders**.
 
 ## Frontend
 
