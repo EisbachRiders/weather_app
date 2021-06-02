@@ -25,6 +25,6 @@ six==1.15.0
 sklearn==0.0
 soupsieve==2.0.1
 threadpoolctl==2.1.0
-urllib3==1.25.9
+urllib3==1.26.5
 Werkzeug==0.15.4
 yarl==1.4.2
