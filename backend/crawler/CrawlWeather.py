@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import os.path
 from ftplib import FTP_TLS
+import ssl
 import os
 
 class CrawlWeather:
@@ -18,7 +19,8 @@ class CrawlWeather:
 
     def getCreekData(self, date_start, date_end):
         #Connect to FTP
-        ftp = FTP_TLS(os.environ.get('SERVER'), timeout=30)
+        ctx = ssl.create_default_context()  # verifies certificate chain and hostname
+        ftp = FTP_TLS(os.environ.get('SERVER'), context=ctx, timeout=30)
         ftp.login(os.environ.get('USERNAME'),os.environ.get('PASSWORD'))
         ftp.prot_p()
         ftp.cwd('eisbach-riders/forecast')

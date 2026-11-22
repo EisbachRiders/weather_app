@@ -7,6 +7,7 @@ from predict_temperature import predict_temperature
 import os.path
 import json
 from ftplib import FTP_TLS
+import ssl
 import time
 import requests
 
@@ -14,7 +15,8 @@ def main():
     CLIMACELL_API_KEY = os.environ['CLIMACELL_API_KEY']  # never hardcode; set via environment/secret manager
     show_forecast=False
     #Connect to FTP
-    ftp = FTP_TLS(os.environ.get('SERVER'), timeout=30)
+    ctx = ssl.create_default_context()  # verifies certificate chain and hostname
+    ftp = FTP_TLS(os.environ.get('SERVER'), context=ctx, timeout=30)
     ftp.login(os.environ.get('USERNAME'),os.environ.get('PASSWORD'))
     ftp.prot_p()  # encrypt the data channel as well
     ftp.cwd('eisbach-riders/forecast')
