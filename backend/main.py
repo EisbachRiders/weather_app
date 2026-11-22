@@ -6,15 +6,17 @@ import math
 from predict_temperature import predict_temperature
 import os.path
 import json
-from ftplib import FTP
+from ftplib import FTP_TLS
 import time
 import requests
 
 def main():
+    CLIMACELL_API_KEY = os.environ['CLIMACELL_API_KEY']  # never hardcode; set via environment/secret manager
     show_forecast=False
     #Connect to FTP
-    ftp = FTP(os.environ.get('SERVER'))
+    ftp = FTP_TLS(os.environ.get('SERVER'), timeout=30)
     ftp.login(os.environ.get('USERNAME'),os.environ.get('PASSWORD'))
+    ftp.prot_p()  # encrypt the data channel as well
     ftp.cwd('eisbach-riders/forecast')
     ftp.retrbinary("RETR " + 'forecast.csv', open('/tmp/forecast.csv', 'wb').write)
     ftp.retrbinary("RETR " + 'forecast.json', open('/tmp/forecast.json', 'wb').write)
@@ -135,12 +137,12 @@ def main():
 
     # Get weather forecast
     url_daily = "https://api.climacell.co/v3/weather/forecast/daily"
-    params_daily = dict(apikey='oTQh2hYYLn0O5SE4VTDPSZA0lf3UUdm0', lat=48.14794, lon=11.592334, fields=['weather_code', 'temp'])
-    response_daily = requests.request("GET", url_daily,params=params_daily)
+    params_daily = dict(apikey=CLIMACELL_API_KEY, lat=48.14794, lon=11.592334, fields=['weather_code', 'temp'])
+    response_daily = requests.get(url_daily, params=params_daily, timeout=30)
     weather_forecast_daily = response_daily.json()
     url_hourly = "https://api.climacell.co/v3/weather/forecast/hourly"
-    params_hourly = dict(apikey='oTQh2hYYLn0O5SE4VTDPSZA0lf3UUdm0', lat=48.14794, lon=11.592334, fields=['weather_code', 'temp'])
-    response_hourly = requests.request("GET", url_hourly,params=params_hourly)
+    params_hourly = dict(apikey=CLIMACELL_API_KEY, lat=48.14794, lon=11.592334, fields=['weather_code', 'temp'])
+    response_hourly = requests.get(url_hourly, params=params_hourly, timeout=30)
     weather_forecast_hourly = response_hourly.json()
 
     list1 = list(data_returned['airTemperature'].iloc[-9:].to_numpy())

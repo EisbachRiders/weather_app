@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
 import os.path
-from ftplib import FTP
+from ftplib import FTP_TLS
 import os
 
 class CrawlWeather:
@@ -18,8 +18,9 @@ class CrawlWeather:
 
     def getCreekData(self, date_start, date_end):
         #Connect to FTP
-        ftp = FTP(os.environ.get('SERVER'))
+        ftp = FTP_TLS(os.environ.get('SERVER'), timeout=30)
         ftp.login(os.environ.get('USERNAME'),os.environ.get('PASSWORD'))
+        ftp.prot_p()
         ftp.cwd('eisbach-riders/forecast')
         ftp.retrbinary("RETR " + 'eisbach_data.csv', open('/tmp/eisbach_data.csv', 'wb').write)
         ftp.quit()
@@ -35,7 +36,7 @@ class CrawlWeather:
             else:
                 url = "https://www.gkd.bayern.de/de/fluesse/" + category + "/isar/muenchen-himmelreichbruecke-16515005/monatswerte/tabelle?beginn=" + date_start.strftime(
                     "%d.%m.%Y") + "&ende=" + date_end.strftime("%d.%m.%Y")
-            r = requests.get(url)
+            r = requests.get(url, timeout=30)
             doc = BeautifulSoup(r.text, "html.parser")
             # data = doc.select(".row2")
             data = doc.findAll('table')[1].findAll('tr')
@@ -100,7 +101,7 @@ class CrawlWeather:
         #url = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/deutschland/flughafen-muenchen-franz-josef-strauss-muc/DE0003033027.html'
         #url  = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/3_tagesvorhersage/deutschland/muenchen/DE0006515.html'
         url = 'https://www.wetter.com/wetter_aktuell/wettervorhersage/' + str(self.days_forecast)  + '_tagesvorhersage/deutschland/muenchen/DE0006515.html'
-        r = requests.get(url)
+        r = requests.get(url, timeout=30)
         doc = BeautifulSoup(r.text, "html.parser")
 
         # Get current air temperature
